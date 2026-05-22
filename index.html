@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,8 +17,8 @@
             <a href="#" class="text-2xl font-extrabold text-blue-600">
                 <i class="fas fa-feather-alt mr-2"></i>GBob
             </a>
-            <div class="hidden md:flex space-x-6">
-                <a href="#about" class="text-gray-600 hover:text-blue-600 transition font-medium">About</a>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#services" class="text-gray-600 hover:text-blue-600 transition font-medium">About</a>
                 <a href="#clients" class="text-gray-600 hover:text-blue-600 transition font-medium">For Clients</a>
                 <a href="#publishers" class="text-gray-600 hover:text-blue-600 transition font-medium">For Publishers</a>
                 <a href="#contact" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition font-medium">Get in Touch</a>
@@ -32,10 +32,10 @@
             <h1 class="text-5xl font-bold mb-4 leading-tight">Connect Your Content with the Right Audience</h1>
             <p class="text-xl mb-10 text-blue-100 max-w-2xl mx-auto">GBob is the premier bridge between brands looking for high-quality outreach and website owners looking to host premium articles.</p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#contact-client" class="bg-white text-blue-700 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition duration-300">
+                <a href="#contact" onclick="setFormOption('client')" class="bg-white text-blue-700 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-gray-100 transition duration-300">
                     I Want to Publish Articles
                 </a>
-                <a href="#contact-publisher" class="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-white hover:text-blue-700 transition duration-300">
+                <a href="#contact" onclick="setFormOption('publisher')" class="bg-transparent border-2 border-white text-white font-bold py-3 px-8 rounded-full shadow-lg hover:bg-white hover:text-blue-700 transition duration-300">
                     I Want to Host Articles
                 </a>
             </div>
@@ -63,7 +63,7 @@
                         <li><i class="fas fa-check text-green-500 mr-2"></i> Quality do-follow backlinks</li>
                         <li><i class="fas fa-check text-green-500 mr-2"></i> Content creation and strategy assistance</li>
                     </ul>
-                    <a href="#contact" class="text-blue-600 font-bold hover:underline">Start Publishing &rarr;</a>
+                    <a href="#contact" onclick="setFormOption('client')" class="text-blue-600 font-bold hover:underline">Start Publishing &rarr;</a>
                 </div>
 
                 <!-- For Publishers -->
@@ -78,7 +78,7 @@
                         <li><i class="fas fa-check text-green-500 mr-2"></i> High-quality, original content provided</li>
                         <li><i class="fas fa-check text-green-500 mr-2"></i> Full editorial control over what you post</li>
                     </ul>
-                    <a href="#contact" class="text-indigo-600 font-bold hover:underline">Start Hosting &rarr;</a>
+                    <a href="#contact" onclick="setFormOption('publisher')" class="text-indigo-600 font-bold hover:underline">Start Hosting &rarr;</a>
                 </div>
             </div>
         </div>
@@ -92,40 +92,53 @@
                 <p class="text-gray-600 mt-4">Whether you are looking to publish or host, drop us a message and we'll connect you with the right opportunities.</p>
             </div>
 
-            <div class="bg-gray-50 p-8 md:p-10 rounded-2xl shadow-md border border-gray-100">
-                <form action="#" method="POST" class="space-y-6">
+            <div class="bg-gray-50 p-8 md:p-10 rounded-2xl shadow-md border border-gray-100 relative">
+                <!-- SUCCESS MESSAGE OVERLAY (Hidden by default) -->
+                <div id="success-overlay" class="hidden absolute inset-0 bg-white rounded-2xl flex flex-col items-center justify-center text-center p-6 z-10 animate-fade-in">
+                    <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-3xl mb-4">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Message Sent Successfully!</h3>
+                    <p class="text-gray-600 max-w-md">Thank you for reaching out to GBob. We have received your details and will get back to your email inbox shortly.</p>
+                    <button onclick="resetForm()" class="mt-6 text-sm text-blue-600 font-semibold hover:underline">Send another message</button>
+                </div>
+
+                <!-- ACTUAL FORM -->
+                <!-- REPLACE THE ACTION URL BELOW WITH YOUR ENVELOPE URL FROM FORMSPREE OR WEB3FORMS -->
+                <form id="gbob-form" action="https://api.web3forms.com/submit" method="POST" class="space-y-6">
+                    <input type="hidden" name="access_key" value="56854642-99eb-4ceb-a823-067ee056d029">
                     <div class="grid md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
-                            <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" placeholder="John Doe">
+                            <input type="text" name="name" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" placeholder="John Doe">
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                            <input type="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" placeholder="john@example.com">
+                            <input type="email" name="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" placeholder="john@example.com">
                         </div>
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">I am looking to:</label>
-                        <select class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition bg-white">
-                            <option>Publish articles (I am a Client/Brand)</option>
-                            <option>Host articles (I am a Website Owner/Publisher)</option>
-                            <option>Other inquiries</option>
+                        <select id="form-intent" name="intent" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition bg-white">
+                            <option value="Publish articles (Client)">Publish articles (I am a Client/Brand)</option>
+                            <option value="Host articles (Publisher)">Host articles (I am a Website Owner/Publisher)</option>
+                            <option value="Other inquiries">Other inquiries</option>
                         </select>
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Website URL (Optional)</label>
-                        <input type="url" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" placeholder="https://yourwebsite.com">
+                        <input type="url" name="website" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" placeholder="https://yourwebsite.com">
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                        <textarea rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" placeholder="Tell us about your niche, metrics, or requirements..."></textarea>
+                        <textarea name="message" rows="4" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition" placeholder="Tell us about your niche, metrics, or requirements..."></textarea>
                     </div>
 
-                    <button type="submit" class="w-full bg-blue-600 text-white font-bold py-4 rounded-lg shadow hover:bg-blue-700 transition duration-300">
-                        Send Message
+                    <button type="submit" id="submit-btn" class="w-full bg-blue-600 text-white font-bold py-4 rounded-lg shadow hover:bg-blue-700 transition duration-300 flex justify-center items-center gap-2">
+                        <span>Send Message</span>
                     </button>
                 </form>
             </div>
@@ -148,5 +161,56 @@
         </div>
     </footer>
 
+    <!-- Smart Logic Script -->
+    <script>
+        // Auto-select dropdown option depending on which button they clicked
+        function setFormOption(role) {
+            const dropdown = document.getElementById('form-intent');
+            if (role === 'client') {
+                dropdown.selectedIndex = 0;
+            } else if (role === 'publisher') {
+                dropdown.selectedIndex = 1;
+            }
+        }
+
+        // AJAX Form Submission so page doesn't refresh
+        const form = document.getElementById('gbob-form');
+        const overlay = document.getElementById('success-overlay');
+        const submitBtn = document.getElementById('submit-btn');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Visual loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner animate-spin mr-2"></i> Sending...';
+
+            const formData = new FormData(form);
+            
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    overlay.classList.remove('hidden');
+                    form.reset();
+                } else {
+                    alert('Oops! There was a problem submitting your form. Please double check your endpoint setup.');
+                }
+            } catch (error) {
+                alert('Connection error. Please try again later.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>Send Message</span>';
+            }
+        });
+
+        function resetForm() {
+            overlay.classList.add('hidden');
+        }
+    </script>
 </body>
 </html>
